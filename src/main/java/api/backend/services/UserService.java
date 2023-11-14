@@ -59,7 +59,7 @@ public class UserService {
         user.setPassword(encoder.encode(CharBuffer.wrap(request.password())));
 
         User savedUSer=userReposritory.save(user);
-        //
+
         return userMapper.toUserDTO(savedUSer);
     }
 }

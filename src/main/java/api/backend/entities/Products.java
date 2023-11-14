@@ -16,11 +16,12 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productID;
     @Column(nullable = false,unique = true)
-    private Long SKU;//stock unit number, which is a unique identifier for our products
+    private Long SKU;
     private String productName;
     private String productDescription;
     private double price;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoryID")
     private Category category;
 
     public Products(Long SKU, String productName, String productDescription,double price,Category  category) {

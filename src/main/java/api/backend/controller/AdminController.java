@@ -23,18 +23,6 @@ public class AdminController {
         this.categoryService = categoryService;
     }
 
-    //method to get all items available on the DB
-    @GetMapping("/products/searchAll")
-    public List<Products> getAllProducts(){
-        return productService.allProducts();
-    }
-
-    //method to get items by category
-    @GetMapping("/products/searchBy/{category}")
-    public List<Products> getByCategory(@PathVariable("category") String categoryName){
-        return productService.productsByCategory(categoryName);
-    }
-
     //create items
     @PostMapping("/product/create")
     public ResponseEntity<Products> createProducts(@RequestBody ProductRequest productRequest){
@@ -60,16 +48,7 @@ public class AdminController {
         Category category=categoryService.createCategory(categoryRequest);
         return ResponseEntity.ok(category);
     }
-    //get a category
-    @GetMapping("/category/searchAll")
-    public ResponseEntity<List<Category>> getAllCategories(){
-        List<Category> categories=categoryService.getAllCategory();
-        return ResponseEntity.ok(categories);
-    }
-    @GetMapping("/category/search/{categoryName}")
-    public ResponseEntity<Optional<Category>> getCategory(@PathVariable("categoryName") String categoryName){
-        return ResponseEntity.ok(categoryService.getACategory(categoryName));
-    }
+
     //update a category
     @PutMapping("/category/update/{categoryID}")
     public ResponseEntity<Optional<Category>> updateCategory(@PathVariable("categoryID") Long id, @RequestBody CategoryRequest request){
