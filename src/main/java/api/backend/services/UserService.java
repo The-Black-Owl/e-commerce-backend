@@ -8,7 +8,7 @@ import api.backend.entities.User;
 import api.backend.mapper.UserMapper;
 import api.backend.repository.RoleRepository;
 import api.backend.repository.UserReposritory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,14 +20,17 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserReposritory userReposritory;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private UserMapper userMapper;
+    private final UserReposritory userReposritory;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
+    private final UserMapper userMapper;
+
+    public UserService(UserReposritory userReposritory, RoleRepository roleRepository, PasswordEncoder encoder, UserMapper userMapper) {
+        this.userReposritory = userReposritory;
+        this.roleRepository = roleRepository;
+        this.encoder = encoder;
+        this.userMapper = userMapper;
+    }
 
     public UserDTO login(AuthenticationRequest request) {
         //check if the user exist, we do this by email
