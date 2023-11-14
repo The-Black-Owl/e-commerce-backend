@@ -17,6 +17,6 @@ public class ProductDTO {
     private String productName;
     private Long SKU;
     private String productDescription;
-    private Set<Category> category;
+    private Category category;
     double price;
 }

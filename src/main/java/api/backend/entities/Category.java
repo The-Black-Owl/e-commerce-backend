@@ -3,6 +3,7 @@ package api.backend.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,8 @@ public class Category {
     private Long categoryID;
     private String categoryName;
 
-    @ManyToMany(mappedBy="category")
-    private Set<Products> products;
+    @OneToMany(mappedBy="category")
+    private Set<Products> products= new HashSet<>();
 
     public Category(String categoryName) {
         this.categoryName = categoryName;

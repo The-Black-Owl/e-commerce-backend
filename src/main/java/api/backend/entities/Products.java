@@ -20,18 +20,10 @@ public class Products {
     private String productName;
     private String productDescription;
     private double price;
-    @OneToOne(mappedBy = "product",cascade = CascadeType.REMOVE,optional = false,orphanRemoval = true)
-    private Inventory inventory;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Category category;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name="product_ID"),
-            inverseJoinColumns = @JoinColumn(name="category_ID")
-    )
-    private Set<Category> category;
-
-    public Products(Long SKU, String productName, String productDescription,double price,Set<Category>  category) {
+    public Products(Long SKU, String productName, String productDescription,double price,Category  category) {
         this.SKU = SKU;
         this.productName = productName;
         this.productDescription = productDescription;

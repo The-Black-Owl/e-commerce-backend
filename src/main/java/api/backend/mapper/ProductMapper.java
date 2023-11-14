@@ -4,30 +4,28 @@ import api.backend.dto.ProductDTO;
 import api.backend.dto.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
+import api.backend.repository.CategoryRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
+
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     ProductDTO toProductDto(Products products);
 
-    Products prodRequestToProducts(ProductRequest request);
+    @Mapping(target = "category", source = "category")
+    Products prodRequestToProducts(ProductRequest productRequest);
 
-    //    @Mapping(target = "category", source = "category")
-//    Products map(ProductRequest request);
-//
-//    default Category map(String value) {
-//        if (value == null) {
-//            return null;
-//        }
-//        return new Category(value);
-//    }
-    default Set<Category> mapCategoryStringToSet(String categoryString) {
-        Set<Category> categories = new HashSet<>();
+    default Category mapCategoryStringToCategory(String categoryName) {
+        // Assuming you have access to CategoryRepository
+        CategoryRepository categoryRepository = null;
+        Optional<Category> existingCategory = categoryRepository.findByCategoryName(categoryName);
 
-        return categories;
+        return existingCategory.orElseGet(() -> {
+            Category newCategory = new Category(categoryName);
+            return categoryRepository.save(newCategory);
+        });
     }
 }

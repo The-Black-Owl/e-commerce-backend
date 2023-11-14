@@ -1,6 +1,5 @@
 package api.backend.services;
 
-import api.backend.dto.ProductDTO;
 import api.backend.dto.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
@@ -23,45 +22,40 @@ public class ProductService {
     private ProductMapper productMapper;
 
     //method to Add a product
-    public ProductDTO newProduct(ProductRequest productRequest) {
+    public Products newProduct(ProductRequest productRequest) {
         //check if the product already exists
         Optional<Products> productSKU=productRepository.findBySKU(productRequest.SKU());
         if (productSKU.isPresent()){
             throw new RuntimeException(HttpStatus.FOUND.toString());
         }
         //create a category
-        Category category=new Category(productRequest.category());
-        HashSet<Category> productCategory=new HashSet<>();
-        productCategory.add(category);
-        categoryRepository.save(category);
+        Category productCategory=new Category(productRequest.category());
+        categoryRepository.save(productCategory);
         //create a new product
-        Products products=productMapper.prodRequestToProducts(productRequest);
-        products.setCategory(productCategory);
+        Products product=new Products(productRequest.SKU(),
+                productRequest.productName()
+                ,productRequest.productDescription()
+                ,productRequest.price()
+                ,productCategory);
+//      product.setCategory(productCategory);
 
-        Products newProduct=productRepository.save(products);
-        return productMapper.toProductDto(newProduct);
+        productRepository.save(product);
+        return product;
     }
 
     //method to get all products
-    public List<ProductDTO> allProducts(){
+    public List<Products> allProducts(){
         List<Products> products=new ArrayList<>();
         productRepository.findAll().forEach(prod->products.add(prod));
-        List<ProductDTO> productDTOs=new ArrayList<>();
-        for(Products prod:products){
-            productDTOs.add(productMapper.toProductDto(prod));
-        }
-        return productDTOs;
+        return products;
     }
 
     //method to get product by name
-    public List<ProductDTO> productsByCategory(String categoryName){
-        List<Category> category=categoryRepository.findAllByCategoryName(categoryName);
-        List<ProductDTO> productDTOS=new ArrayList<>();
-        List<Products> productsList=productRepository.findAllByCategory(category.get(0));
-        for(Products prod:productsList){
-            productDTOS.add(productMapper.toProductDto(prod));
-        }
-        return productDTOS;
+    public List<Products> productsByCategory(String categoryName){
+        Optional<Category> category=categoryRepository.findByCategoryName(categoryName);
+        List<Products> productsList=productRepository.findAllByCategory(category);
+
+        return productsList;
     }
 
     //method to remove product
@@ -74,7 +68,7 @@ public class ProductService {
     }
 
     //method to update a product
-    public ProductDTO updateProduct(Long sku, ProductRequest request) {
+    public Products updateProduct(Long sku, ProductRequest request) {
         Optional<Products> findProduct=productRepository.findBySKU(sku);
         if(!findProduct.isPresent()){
             throw new RuntimeException(HttpStatus.NOT_FOUND.toString());
@@ -84,7 +78,7 @@ public class ProductService {
         products.setProductDescription(request.productDescription());
 
         Products updatedProduct=productRepository.save(products);
-        return productMapper.toProductDto(updatedProduct);
+        return products;
     }
 
 }
