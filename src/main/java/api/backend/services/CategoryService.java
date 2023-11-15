@@ -1,7 +1,8 @@
 package api.backend.services;
 
-import api.backend.dto.CategoryRequest;
+import api.backend.dto.requestRecords.CategoryRequest;
 import api.backend.entities.Category;
+import api.backend.exceptions.CategoryNotFoundException;
 import api.backend.exceptions.ResourceNotFoundException;
 import api.backend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -32,14 +33,18 @@ public class CategoryService {
     }
     //update a category
     public Optional<Category> updateCategory(Long id, CategoryRequest request) throws ResourceNotFoundException {
-        return categoryRepository.findById(id)
+        return Optional.of(categoryRepository.findById(id)
                 .map(category -> {
                     category.setCategoryName(request.categoryName());
                     return category;
-                });
+                }).orElseGet(() -> {
+                    Category category = new Category(request.categoryName());
+                    return categoryRepository.save(category);
+                }));
     }
     //delete category
     public String deleteCategory(Long categoryId){
+        if(categoryRepository.findById(categoryId).isEmpty())throw new CategoryNotFoundException(categoryId);
         categoryRepository.deleteById(categoryId);
         return "Successfully removed!";
     }

@@ -1,7 +1,7 @@
 package api.backend.controller;
 
-import api.backend.dto.CategoryRequest;
-import api.backend.dto.ProductRequest;
+import api.backend.dto.requestRecords.CategoryRequest;
+import api.backend.dto.requestRecords.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
 import api.backend.services.CategoryService;
@@ -9,7 +9,6 @@ import api.backend.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController

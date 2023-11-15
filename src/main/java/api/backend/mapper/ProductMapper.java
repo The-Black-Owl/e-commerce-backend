@@ -1,7 +1,7 @@
 package api.backend.mapper;
 
 import api.backend.dto.ProductDTO;
-import api.backend.dto.ProductRequest;
+import api.backend.dto.requestRecords.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
 import api.backend.repository.CategoryRepository;

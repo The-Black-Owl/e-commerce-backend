@@ -1,6 +1,6 @@
 package api.backend.mapper;
 
-import api.backend.dto.SignUpRequest;
+import api.backend.dto.requestRecords.SignUpRequest;
 import api.backend.dto.UserDTO;
 import api.backend.entities.User;
 import org.mapstruct.Mapper;

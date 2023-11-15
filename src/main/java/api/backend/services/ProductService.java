@@ -1,12 +1,13 @@
 package api.backend.services;
 
-import api.backend.dto.ProductRequest;
+import api.backend.dto.requestRecords.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
+import api.backend.exceptions.ResourceNotFoundException;
 import api.backend.mapper.ProductMapper;
 import api.backend.repository.CategoryRepository;
 import api.backend.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +15,21 @@ import java.util.*;
 
 @Service
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ProductMapper productMapper;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.productMapper = productMapper;
+    }
 
     //method to Add a product
     public Products newProduct(ProductRequest productRequest) {
         //check if the product already exists
         Optional<Products> productSKU=productRepository.findBySKU(productRequest.SKU());
         if (productSKU.isPresent()){
-            throw new RuntimeException(HttpStatus.FOUND.toString());
+            throw new ResourceNotFoundException(HttpStatus.FOUND.toString());
         }
         //create a category
         Category productCategory=new Category(productRequest.category());
@@ -37,25 +40,19 @@ public class ProductService {
                 ,productRequest.productDescription()
                 ,productRequest.price()
                 ,productCategory);
-//      product.setCategory(productCategory);
-
-        productRepository.save(product);
+         productRepository.save(product);
         return product;
     }
 
     //method to get all products
     public List<Products> allProducts(){
-        List<Products> products=new ArrayList<>();
-        productRepository.findAll().forEach(prod->products.add(prod));
-        return products;
+        return new ArrayList<>(productRepository.findAll());
     }
 
     //method to get product by name
     public List<Products> productsByCategory(String categoryName){
         Optional<Category> category=categoryRepository.findByCategoryName(categoryName);
-        List<Products> productsList=productRepository.findAllByCategory(category);
-
-        return productsList;
+         return productRepository.findAllByCategory(category);
     }
 
     //method to remove product
@@ -64,20 +61,19 @@ public class ProductService {
         if(productRepository.findBySKU(sku).isPresent()){
             productRepository.deleteBySKU(sku);
         }
-        throw new RuntimeException(HttpStatus.NOT_FOUND.toString());
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND.toString());
     }
 
     //method to update a product
     public Products updateProduct(Long sku, ProductRequest request) {
         Optional<Products> findProduct=productRepository.findBySKU(sku);
-        if(!findProduct.isPresent()){
-            throw new RuntimeException(HttpStatus.NOT_FOUND.toString());
+        if(findProduct.isEmpty()){
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND.toString());
         }
         Products products=productMapper.prodRequestToProducts(request);
         products.setProductName(request.productName());
         products.setProductDescription(request.productDescription());
-
-        Products updatedProduct=productRepository.save(products);
+        productRepository.save(products);
         return products;
     }
 

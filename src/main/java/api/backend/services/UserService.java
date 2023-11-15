@@ -1,7 +1,7 @@
 package api.backend.services;
 
-import api.backend.dto.AuthenticationRequest;
-import api.backend.dto.SignUpRequest;
+import api.backend.dto.requestRecords.AuthenticationRequest;
+import api.backend.dto.requestRecords.SignUpRequest;
 import api.backend.dto.UserDTO;
 import api.backend.entities.Role;
 import api.backend.entities.User;
