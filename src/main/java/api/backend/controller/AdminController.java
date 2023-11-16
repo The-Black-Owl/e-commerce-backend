@@ -1,5 +1,6 @@
 package api.backend.controller;
 
+import api.backend.dto.ProductDTO;
 import api.backend.dto.requestRecords.CategoryRequest;
 import api.backend.dto.requestRecords.ProductRequest;
 import api.backend.entities.Category;
@@ -23,10 +24,9 @@ public class AdminController {
     }
 
     //create items
-    @PostMapping("/product/create")
+    @PostMapping("/products/create")
     public ResponseEntity<Products> createProducts(@RequestBody ProductRequest productRequest){
-        Products product=productService.newProduct(productRequest);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(productService.newProduct(productRequest));
     }
     //remove items
     @DeleteMapping("/product/delete/{SKU}")
@@ -36,8 +36,8 @@ public class AdminController {
     }
     //update items
     @PutMapping("/product/update/{SKU}")
-    public ResponseEntity<Products> updateProduct(@RequestBody ProductRequest request, @PathVariable("SKU") Long sku){
-        Products updatedProduct=productService.updateProduct(sku,request);
+    public ResponseEntity<Optional<ProductDTO>> updateProduct(@RequestBody ProductRequest request, @PathVariable("SKU") Long sku){
+        Optional<ProductDTO> updatedProduct=productService.updateProduct(sku,request);
         return ResponseEntity.ok(updatedProduct);
     }
 

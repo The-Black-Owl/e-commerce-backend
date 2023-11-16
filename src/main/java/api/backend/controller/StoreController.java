@@ -1,5 +1,6 @@
 package api.backend.controller;
 
+import api.backend.dto.ProductDTO;
 import api.backend.entities.Category;
 import api.backend.entities.Products;
 import api.backend.services.CategoryService;
@@ -25,11 +26,11 @@ public class StoreController {
 
     //All users of the application should be able to search for products
     @GetMapping("/products/searchAll")
-    public List<Products> getAllProducts(){
+    public List<ProductDTO> getAllProducts(){
         return productService.allProducts();
     }
     @GetMapping("/products/searchBy/{category}")
-    public List<Products> getByCategory(@PathVariable("category") String categoryName){
+    public List<ProductDTO> getByCategory(@PathVariable("category") String categoryName){
         return productService.productsByCategory(categoryName);
     }
     //All users should be able to search for categories

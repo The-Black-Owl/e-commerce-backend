@@ -23,9 +23,11 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request->{
-                    request.requestMatchers(HttpMethod.POST,"/auth/**").permitAll();
-                    request.requestMatchers("/admin/**").permitAll();
-                    request.requestMatchers("/customer/**").hasRole("CUSTOMER");
+//                    request.requestMatchers(HttpMethod.POST,"/auth/**").permitAll();
+//                    request.requestMatchers("/admin/**").permitAll();
+//                    request.requestMatchers("/customer/**").hasRole("CUSTOMER");
+//                    request.requestMatchers("/store/**").permitAll();
+                    request.requestMatchers("/**").permitAll();
                     request.anyRequest().authenticated();});
         return http.build();
         //the token will be the main authentication filter

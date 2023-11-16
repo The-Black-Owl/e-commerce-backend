@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +13,6 @@ public class ProductDTO {
     private String productName;
     private Long SKU;
     private String productDescription;
-    private Long categoryID;
+    private String categoryName;
     double price;
 }

@@ -16,8 +16,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryID;
+    @Column(nullable = false,unique = true)
     private String categoryName;
-
     @OneToMany(mappedBy="category")
     private Set<Products> products= new HashSet<>();
 
