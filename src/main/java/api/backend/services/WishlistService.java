@@ -1,5 +1,6 @@
 package api.backend.services;
 
+import api.backend.dto.ProductDTO;
 import api.backend.entities.Products;
 import api.backend.entities.User;
 import api.backend.entities.Wishlist;
@@ -9,7 +10,7 @@ import api.backend.repository.UserReposritory;
 import api.backend.repository.WishlistRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class WishlistService {
@@ -32,8 +33,10 @@ public class WishlistService {
         wishlistRepository.save(wishlist);
     }
     //get wishlist
-    public Optional<Wishlist> getWishlist(Long wishListID){
-        return wishlistRepository.findById(wishListID);
+    public List<ProductDTO> getWishlistForUser(Long userID){
+        List<Wishlist> wishlists=wishlistRepository.findAllByUserOrderByCreatedAtDesc(userReposritory.findById(userID).get());
+        List<Products> products= wishlists.stream().map(Wishlist::getProducts).toList();
+        return products.stream().map(productMapper).toList();
     }
     public void removeWishlist(Long wishListID){
         wishlistRepository.deleteById(wishListID);

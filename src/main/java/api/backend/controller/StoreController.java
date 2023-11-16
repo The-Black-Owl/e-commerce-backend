@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +56,8 @@ public class StoreController {
         wishlistService.removeWishlist(id);
         return HttpStatus.OK;
     }
-    //get wishlist
+    @GetMapping("/wishlis/find/{userID}")
+    public ResponseEntity<List<ProductDTO>> getUserWishlist(@PathVariable("userID")Long id){
+        return ResponseEntity.ok(wishlistService.getWishlistForUser(id));
+    }
 }
