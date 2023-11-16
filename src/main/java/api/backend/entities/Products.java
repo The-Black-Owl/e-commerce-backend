@@ -1,5 +1,6 @@
 package api.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +22,11 @@ public class Products {
     private String productDescription;
     private double price;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "categoryID")
     private Category category;
+    @OneToMany(mappedBy = "products")
+    private Set<Wishlist> wishlists;
 
     public Products(Long SKU, String productName, String productDescription,double price,Category  category) {
         this.SKU = SKU;
