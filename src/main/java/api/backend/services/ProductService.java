@@ -1,6 +1,6 @@
 package api.backend.services;
 
-import api.backend.dto.ProductDTO;
+import api.backend.dto.product.ProductDTO;
 import api.backend.dto.requestRecords.ProductRequest;
 import api.backend.entities.Category;
 import api.backend.entities.Products;

@@ -1,6 +1,6 @@
 package api.backend.services;
 
-import api.backend.dto.ProductDTO;
+import api.backend.dto.product.ProductDTO;
 import api.backend.entities.Products;
 import api.backend.entities.User;
 import api.backend.entities.Wishlist;

@@ -35,5 +35,6 @@ public class User {
     private Set<Address> address=new HashSet<>();
     @OneToOne(mappedBy = "user")
     private Wishlist wishlists;
-
+    @OneToMany(mappedBy = "user")
+    private Set<Cart> carts;
 }

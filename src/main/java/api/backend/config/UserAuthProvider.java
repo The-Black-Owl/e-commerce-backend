@@ -1,6 +1,6 @@
 package api.backend.config;
 
-import api.backend.dto.UserDTO;
+import api.backend.dto.user.UserDTO;
 import api.backend.entities.User;
 import api.backend.mapper.UserMapper;
 import api.backend.repository.UserReposritory;
@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

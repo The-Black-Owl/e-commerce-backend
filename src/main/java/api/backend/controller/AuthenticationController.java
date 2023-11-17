@@ -3,7 +3,7 @@ package api.backend.controller;
 import api.backend.config.UserAuthProvider;
 import api.backend.dto.requestRecords.AuthenticationRequest;
 import api.backend.dto.requestRecords.SignUpRequest;
-import api.backend.dto.UserDTO;
+import api.backend.dto.user.UserDTO;
 import api.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

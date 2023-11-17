@@ -27,6 +27,8 @@ public class Products {
     private Category category;
     @OneToMany(mappedBy = "products")
     private Set<Wishlist> wishlists;
+    @OneToMany(mappedBy = "products")
+    private Set<Cart> carts;
 
     public Products(Long SKU, String productName, String productDescription,double price,Category  category) {
         this.SKU = SKU;

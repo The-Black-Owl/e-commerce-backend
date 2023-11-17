@@ -14,4 +14,5 @@ public interface ProductRepository extends JpaRepository<Products,Long> {
     Optional<Products> findBySKU(Long sku);//find product by the stock unit number
     List<Products> findAllByCategory(Optional<Category> category);
     void deleteBySKU(Long sku);//removes the product by the stock unit number
+
 }

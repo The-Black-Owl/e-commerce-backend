@@ -1,6 +1,6 @@
 package api.backend.mapper;
 
-import api.backend.dto.ProductDTO;
+import api.backend.dto.product.ProductDTO;
 import api.backend.entities.Products;
 import org.springframework.stereotype.Service;
 

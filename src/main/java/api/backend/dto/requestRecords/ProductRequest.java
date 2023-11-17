@@ -1,7 +1,5 @@
 package api.backend.dto.requestRecords;
 
-import java.util.Set;
-
 public record ProductRequest(
         String productName,
         Long SKU,
